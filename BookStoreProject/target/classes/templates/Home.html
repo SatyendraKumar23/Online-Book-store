@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeLeaf.com">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Book Store</title>
+    
+    <style>
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+}
+
+
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    gap: 44px;
+    flex-wrap: wrap;
+}
+
+.card {
+    position: relative;
+    width: 325px;
+    height: 450px;
+    background: #000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
+.poster {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.poster::before {
+    content: '';
+    position: absolute;
+    bottom: -45%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: .3s;
+}
+
+.card:hover .poster::before {
+    bottom: 0;
+}
+
+.poster img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.card:hover .poster img {
+    transform: scale(1.1);
+}
+
+.details {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 1.5em 1.5em 2em;
+    background: #000a;
+    backdrop-filter: blur(16px) saturate(120%);
+    transition: .3s;
+    color: #fff;
+    z-index: 2;
+}
+
+.card:hover .details {
+    bottom: 0;
+}
+
+.details h1,
+.details h2 {
+    font-weight: 700;
+}
+
+.details h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.details h2 {
+    font-weight: 400;
+    font-size: 1em;
+    margin-bottom: 10px;
+    opacity: .6;
+}
+
+.details .rating {
+    position: relative;
+    margin-bottom: 15px;
+    display: flex;
+    gap: .25em;
+}
+
+.details .rating i {
+    color: #e3c414;
+}
+
+.details .rating span {
+    margin-left: 0.25em;
+}
+
+.details .tags {
+    display: flex;
+    gap: .375em;
+    margin-bottom: .875em;
+    font-size: .85em;
+}
+
+.details .tags span {
+    padding: .35rem .65rem;
+    color: #fff;
+    border: 1.5px solid rgba(255 255 255 / 0.4);
+    border-radius: 4px;
+    border-radius: 50px;
+}
+
+.details .desc {
+    color: #fff;
+    opacity: .8;
+    line-height: 1.5;
+    margin-bottom: 1em;
+}
+
+.details .cast h3 {
+    margin-bottom: .5em;
+}
+
+.details .cast ul {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    width: 100%;
+}
+
+.details .cast ul li {
+    list-style: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid #fff;
+}
+
+.details .cast ul li img {
+    width: 100%;
+    height: 100%;
+}
+.container3 {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+h1 {
+    color:ghostwhite;
+    font-size: 50px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgb(255, 255, 255);
+}
+
+h3 {
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    line-height: 1.5;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+body{
+	background-color: black;
+}
+/* Navbar button styling */
+.logout-btn {
+  background-color: transparent;
+  border: 2px solid red;
+  color: red;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: red;
+  color: white;
+}
+
+.footer {
+  background-color: rgb(255, 255, 255,0);
+  color: #fff;
+  padding: 50px 0;
+}
+
+.footer h3 {
+  color: #fff;
+}
+
+.footer p {
+  margin-bottom: 20px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer ul li a:hover {
+  color: #ccc;
+}
+
+
+
+
+	</style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="register">
+  <button class="logout-btn">Logout</button>
+</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="available_books">Available Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="my_books">My Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="loginn">Admin</a>
+        </li>
+      </ul>
+      <div>
+      <a class="nav-link text-white" href="loginnn">New Book Register</a>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+<div class="container3">
+<h1>WELCOME TO ONLINE BOOK STORE</h1>
+<br>
+<H3>Step into a realm of infinite stories and boundless imagination at our online book emporium. Uncover literary gems and embark on unforgettable journeys with just a click.</H3>
+</div>
+<div class="wrapper">
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://th.bing.com/th/id/R.847ff818eb060a80aa401c0273ee49ef?rik=PitBxG7NXly9yA&riu=http%3a%2f%2fi2.wp.com%2fgeekdad.com%2fwp-content%2fuploads%2f2013%2f02%2fHP1-Kibuishi.jpg&ehk=uafYYv3yMqpRGlecJf0Si6SPSZwksDcZUzc982%2byhlQ%3d&risl=&pid=ImgRaw&r=0"></div>
+		<div class="details">
+			<h1 class="headingg">Harry Potter</h1>
+			<h2>Published:2009</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4.2/5</span>
+			</div>
+			
+			<p class="desc">
+				 Harry Potter, a young wizard, discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' mysterious deaths.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://th.bing.com/th/id/R.83026c046642dcb5e46908b7d722ac7d?rik=ORv0kPSf81NzXw&riu=http%3a%2f%2f3.bp.blogspot.com%2f_oX_iiKqvHUI%2fTI45QqEMSfI%2fAAAAAAAAAA0%2fs4-n-jOYHHY%2fs1600%2fjk_rowling_16_wenn1471212.jpg&ehk=ETvp6gcTwAf9dzqKMnHSEndx%2btoL%2b88Mdh72ZIVa0SY%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1
+" alt="Antonio Herrera" title="Antonio Herrera"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://www.headline.co.uk/wp-content/uploads/2019/01/hbg-title-9780755334377-14.jpg?fit=1525%2C2341"></div>
+		<div class="details">
+			<h1>The Sherlock Holmes</h1>
+			<h2>Published:18th December 2006</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="far fa-star"></i>
+				<span>4/5</span>
+			</div>
+			<p class="desc">
+				Sir Arthur Conan Doyle's Sherlock Holmes books feature the iconic detective and his trusty sidekick solving intricate mysteries in Victorian London.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://imgv2-1-f.scribdassets.com/img/word_document/355527263/original/9aba1beea9/1585338317?v=1"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="poster"><img src="https://pre00.deviantart.net/a59b/th/pre/i/2012/220/a/4/death_note_book_cover_by_metaknightmare1234-d5adawg.png"></div>
+		<div class="details">
+			<h1>Death Note</h1>
+			<h2>Published:Aug 8, 2012</h2>
+			<div class="rating">
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star"></i>
+				<i class="fas fa-star-half-alt"></i>
+				<span>4.7/5</span>
+			</div>
+			<p class="desc">
+				Death Note: A high school student gains the ability to kill anyone with a supernatural notebook, sparking a deadly game of wits with a mysterious detective.
+			</p>
+			<div class="cast">
+				<h3>Author</h3>
+				<ul>
+					<li><img src="https://www.babelio.com/users/AVT_Tsugumi-Ohba_7065.jpg"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>About Us</h3>
+        <p>Welcome to our bookstore! We offer a wide selection of books for all ages and interests.</p>
+      </div>
+      <div class="col-md-4">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="home">Home</a></li>
+          <li><a href="available_books">Books</a></li>
+          <li><a href="AboutUs">About Us</a></li>
+          <li><a href="https://www.linkedin.com/in/kumarsatyendra15/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h3>Contact Us</h3>
+        <p>Email:stymvrma2003@gmail.com</p>
+        <p>Phone: +91 6306665984</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+  </body>
+</html>
